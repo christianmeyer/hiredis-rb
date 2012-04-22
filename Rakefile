@@ -18,7 +18,8 @@ unless defined?(RUBY_ENGINE) && RUBY_ENGINE == "jruby"
       if !File.directory?("vendor/hiredis/.git")
         system("git submodule update --init")
       end
-      system("cd vendor/hiredis && make clean")
+      make_cmd = Config::CONFIG['host_os'].downcase =~ /bsd|solaris/ ? "gmake" : "make"
+      system("cd vendor/hiredis && #{make_cmd} clean")
     end
   end
 
